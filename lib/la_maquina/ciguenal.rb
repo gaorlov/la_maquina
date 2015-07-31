@@ -8,8 +8,10 @@ module LaMacquina
         end
       end
 
-      def self.piston(piston)
-        self.pistons << piston
+      def self.add_piston(*pistons)
+        pistons.each do |piston|
+          self.pistons piston
+        end
       end
 
       protected
