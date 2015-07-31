@@ -10,7 +10,7 @@ module LaMacquina
 
       def self.add_piston(*pistons)
         pistons.each do |piston|
-          self.pistons piston
+          self.pistons << piston
         end
       end
 
