@@ -1,7 +1,8 @@
 class Property < ActiveRecord::Base
   belongs_to :user, :polymorphic => true
 
-  include CacheMachine::SubordinateCacheObject
+  include LaMaquina::Volante
 
-  updates_cache_master :user, :polymorphic => true
+
+  notifies :user, :polymorphic => true
 end

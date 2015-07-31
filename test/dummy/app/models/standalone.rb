@@ -1,4 +1,5 @@
 class Standalone < ActiveRecord::Base
-  include CacheMachine::SubordinateCacheObject
-  updates_cache_master :self, :comm_object => ::ExplodingCacheMachineCommObject
+  include LaMaquina::Volante
+
+  notifies :self, :comm_object => ::ExplodingCommObject
 end

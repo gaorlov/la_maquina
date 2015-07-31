@@ -3,7 +3,7 @@ module LaMaquina
     class Base
       
       def self.notify(error, detail = {})
-        throw "A piston has to implement 'notify'"
+        throw "There's no ErrorNotifier set or id doesn't implement `notify` as it should."
       end
       
     end
