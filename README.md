@@ -42,7 +42,7 @@ class Machete < ActiveRecord::Base
   belongs_to :danny_trejo
 
   include LaMaquina::Volante
-  updates :danny_trejo
+  notifies :danny_trejo
 end
 ```
 and we want to let `DannyTrejo` know when his `Machete` has been updated so that we can reindex him.
