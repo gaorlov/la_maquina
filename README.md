@@ -1,4 +1,4 @@
-# CacheMachine
+# La Maquina
 
 TODO: Write a gem description
 
