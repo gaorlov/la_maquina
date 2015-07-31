@@ -31,14 +31,9 @@ class DannyTrejo < ActiveRecord::Base
   has_many :machetes
 
   searchable do 
-    text    :name
     double  :machete_sharpness, multiple: true do
       machetes.map(&:sharpness)
     end
-  end
-
-  def text?
-    false
   end
 end
 ```
