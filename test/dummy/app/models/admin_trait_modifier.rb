@@ -1,8 +1,8 @@
 class AdminTraitModifier < ActiveRecord::Base
   belongs_to :admin_trait
 
-  include CacheMachine::SubordinateCacheObject
+  include LaMaquina::Volante
 
-  updates_cache_master :user, :through => :admin_trait, :class_name => "Admin"
-  updates_cache_master :thing, :through => :admin_trait, :class => Trait
+  notifies :user, :through => :admin_trait, :class_name => "Admin"
+  notifies :thing, :through => :admin_trait, :class => Trait
 end

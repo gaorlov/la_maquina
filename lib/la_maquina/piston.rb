@@ -1,9 +1,6 @@
 module LaMaquina
-  class Piston
-
-    def self.fire!(klass = "", id = nil)
-      throw "A piston has to implement 'fire!'"
-    end
-
+  module Piston
+    autoload :Base,         'la_maquina/piston/base'
+    autoload :CachePiston,  'la_maquina/piston/cache_piston'
   end
 end

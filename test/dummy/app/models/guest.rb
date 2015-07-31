@@ -4,7 +4,7 @@ class Guest < ActiveRecord::Base
 
   has_many :properties, :as => :user
 
-  include CacheMachine::SubordinateCacheObject
+  include LaMaquina::Volante
 
-  updates_cache_master :self
+  notifies :self
 end

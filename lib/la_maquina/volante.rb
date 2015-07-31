@@ -35,11 +35,11 @@ module LaMaquina
             LaMaquina::Ciguenal.notify!(klass, id)
           end
         rescue => e
-          LaMaquina.update_error_handler.call( e,
-                                                  :notified_class => klass,
-                                                  :notified_id => id,
-                                                  :subordinate_class => LaMaquina.format_object_name(self),
-                                                  :subordinate_id => self.id)
+          LaMaquina.error_notifier.notify(  e,
+                                            :notified_class => klass,
+                                            :notified_id => id,
+                                            :subordinate_class => LaMaquina.format_object_name(self),
+                                            :subordinate_id => self.id)
         end
       end
     end

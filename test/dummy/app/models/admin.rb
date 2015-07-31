@@ -4,8 +4,8 @@ class Admin < ActiveRecord::Base
 
   has_many :properties, :as => :user
 
-  include CacheMachine::SubordinateCacheObject
-  updates_cache_master :self
+  include LaMaquina::Volante
+  notifies :self
 
-  updates_cache_master :self, :comm_object => ::DummyCacheMachineCommObject
+  notifies :self, :using => ::DummyCommObject
 end
