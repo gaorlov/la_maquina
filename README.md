@@ -18,7 +18,67 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+
+
+### Sample Pisons
+
+Once the `Ciguenal` is called it fires the `Piston`s, the behavior of which is entirely up to you. 
+
+So, let's say, we have a couple objects that look like:
+
+```ruby
+class DannyTrejo < ActiveRecord::Base
+  has_many :machetes
+
+  searchable do 
+    text    :name
+    double  :machete_sharpness, multiple: true do
+      machetes.map(&:sharpness)
+    end
+  end
+
+  def text?
+    false
+  end
+end
+```
+```ruby
+class Machete < ActiveRecord::Base
+  belongs_to :danny_trejo
+
+  include LaMaquina::Volante
+  updates :danny_trejo
+end
+```
+and we want to let `DannyTrejo` know when his `Machete` has been updated so that we can reindex him.
+
+`Machete` is set up to fire on update, so we'll set up a listener Piston that looks like this:
+
+```ruby
+class SunspotPiston < LaMaquina::Piston
+  class << self
+    def fire!(klass = "", id = nil)
+      indexed_class.find(id).index!
+    end
+
+    private
+
+    def indexed_class(klass)
+      {"danny_trejo" => DannyTrejo}[klass] or raise "can't index class #{klass}!"
+    end
+  end
+end
+
+```
+Which finds the klass, does a find on it and fires off [Sunspot](https://github.com/sunspot/sunspot#reindexing-objects) `index!` 
+
+
+
+
+
+# in app config/la_maquina.rb
+CachePiston.redis = Redis::Namespace.new(:cache_piston, :redis => ApiFactory.redis)
+LaMaquina::Ciguenal.add_piston SunspotPiston, CachePiston
 
 ## Contributing
 
