@@ -80,7 +80,7 @@ LaMaquina::Ciguenal.install MyPiston, LaMaquina::Piston::CachePiston
 LaMaquina::Cinegual.error_notifier = LaMaquina::ErrorNotifier::HoneybadgerNotifier
 ```
 #### ErrorNotifier
-LaMaquina by default comes with an `ErrorNotifier` that will eat all Piston exceptions. To override it, you need to change it in the config above and roll a new `ErrorNotifier` that respond to `notify(error, details)`. For example, if you're using Honeybadger, you can use the included `LaMaquina::ErrorNotifiers::HoneybadgerNotifier, which looks like:
+LaMaquina by default comes with an `ErrorNotifier::Base` that will explode in a very unhelpful manner. To override it, you need to change it in the config above and roll a new `ErrorNotifier` that responds to `notify(error, details)`. For example, if you're using Honeybadger, you can use the included `LaMaquina::ErrorNotifiers::HoneybadgerNotifier, which looks like:
 ```ruby
 class HoneybadgerNotifier < LaMaquina::ErrorNotifier::Base
   self.notify(error = nil, details = {})
