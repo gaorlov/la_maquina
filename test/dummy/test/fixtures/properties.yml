@@ -1,0 +1,7 @@
+su_whatever:
+  user: su (Admin)
+  value: whatever
+
+gregs_thing:
+  user: greg (Guest)
+  value: thing
