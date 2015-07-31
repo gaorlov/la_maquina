@@ -8,7 +8,7 @@ module LaMacquina
         end
       end
 
-      def self.add_piston(*pistons)
+      def self.install(*pistons)
         pistons.each do |piston|
           self.pistons << piston
         end

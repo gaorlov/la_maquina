@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["greg@avvo.com"]
   spec.summary       = %q{depnendency tree update notifications}
   spec.description   = %q{lets you have inter-model update notifications without having to make database connections}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/gaorlov/la_maquina"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
