@@ -1,8 +1,7 @@
 PATH
   remote: .
   specs:
-    cache_machine (0.0.8)
-      redis
+    la_maquina (0.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -120,7 +119,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.6)
-  cache_machine!
+  la_maquina!
   rails (>= 4.2.0)
   rake
   redis

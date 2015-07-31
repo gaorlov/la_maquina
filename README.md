@@ -75,9 +75,9 @@ The 3 things you have to do are: set up the pistons(if they need configuring), i
 For example, if you're using the CachePiston and need to set up Redis, here's how your `la_maquina.rb` will look
 
 ```ruby
-LaMaquina::Pistons::CachePiston.redis = Redis::Namespace.new(:cache_piston, redis: MyRedisInstance)
-LaMaquina::Ciguenal.install MyPiston, LaMaquina::Piston::CachePiston
-LaMaquina::Cinegual.error_notifier = LaMaquina::ErrorNotifier::HoneybadgerNotifier
+LaMaquina::Piston::CachePiston.redis = Redis::Namespace.new(:cache_piston, redis: Redis.new)
+LaMaquina::Ciguenal.install LaMaquina::Piston::CachePiston, TestPiston
+LaMaquina.error_notifier = LaMaquina::ErrorNotifier::HoneybadgerNotifier
 ```
 #### ErrorNotifier
 LaMaquina by default comes with an `ErrorNotifier::Base` that will explode in a very unhelpful manner. To override it, you need to change it in the config above and roll a new `ErrorNotifier` that responds to `notify(error, details)`. For example, if you're using Honeybadger, you can use the included `LaMaquina::ErrorNotifiers::HoneybadgerNotifier, which looks like:

@@ -4,11 +4,15 @@ module LaMaquina
     include ActiveRecord::Callbacks
 
     included do
-
+      
       class << self
-        attr_reader :notified_objects
-        notified_objects = []
+        attr_accessor :notified_objects
+      end
 
+      self.notified_objects = []
+
+      
+      class << self
         def notifies(object, opts = {})
           notified_objects << {:object => object, :options => opts}
         end
@@ -18,7 +22,7 @@ module LaMaquina
     end
 
     def notify!
-      notified_objects.each do |notified|
+      self.class.notified_objects.each do |notified|
 
         object  = notified[:object]
         options = notified[:options]
@@ -38,8 +42,8 @@ module LaMaquina
           LaMaquina.error_notifier.notify(  e,
                                             :notified_class => klass,
                                             :notified_id => id,
-                                            :subordinate_class => LaMaquina.format_object_name(self),
-                                            :subordinate_id => self.id)
+                                            :notifier_class => LaMaquina.format_object_name(self),
+                                            :notifier_id => self.id)
         end
       end
     end

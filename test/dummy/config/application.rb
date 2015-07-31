@@ -3,7 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
 Bundler.require(*Rails.groups)
-require "cache_machine"
+require "la_maquina"
 
 module Dummy
   class Application < Rails::Application

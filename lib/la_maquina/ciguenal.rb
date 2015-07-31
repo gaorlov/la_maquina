@@ -1,23 +1,27 @@
-module LaMacquina
+module LaMaquina
   class Ciguenal
 
     class << self
-      def self.notify!(klass = "", id = nil)
+      protected
+
+      attr_accessor :pistons
+    end
+    self.pistons = []
+
+    class << self 
+
+      def notify!(klass = "", id = nil)
         pistons.each do |piston|
           piston.fire! klass, id
         end
       end
 
-      def self.install(*pistons)
-        pistons.each do |piston|
+      def install(*attrs)
+        attrs.each do |piston|
           self.pistons << piston
         end
       end
 
-      protected
-
-      attr_accessor :pistons
-      self.pistons = []
     end
   end
 end
