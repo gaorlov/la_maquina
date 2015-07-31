@@ -69,7 +69,7 @@ Which finds the klass, does a find on it and fires off [Sunspot](https://github.
 
 ### Setup
 
-The setup is pretty straightforward: you do all the setting up in `config/la_maquina.rb'. 
+The setup is pretty straightforward: you do all the setting up in `config/initializers/la_maquina.rb`. 
 
 The 2 things you have to do are: set up the pistons(if they need configuring) and install them.
 For example, if you're using the CachePiston and need to set up Redis, here's how your `la_maquina.rb` will look
