@@ -13,9 +13,6 @@ class NotifierTest < ActiveSupport::TestCase
     admin_key  = LaMaquina::Piston::CachePiston.cache_key :admin, admin_attr.user.id
     trait_key  = LaMaquina::Piston::CachePiston.cache_key :trait, admin_attr.thing.id
 
-    # sleep to prevent key clash
-    sleep(1)
-
     admin_attr.value = "lol"
     admin_attr.save!
 
@@ -26,8 +23,6 @@ class NotifierTest < ActiveSupport::TestCase
   def test_notifier_can_update_self
     wheel = admins(:wheel)
     key   = LaMaquina::Piston::CachePiston.cache_key :admin, wheel.id
-
-    sleep(1)
     
     wheel.name = "WHEEL!"
     wheel.save!
@@ -41,9 +36,6 @@ class NotifierTest < ActiveSupport::TestCase
     guest_attr = guest_traits(:gregs_something)
     guest_key  = LaMaquina::Piston::CachePiston.cache_key :guest, guest_attr.guest.id
     trait_key  = LaMaquina::Piston::CachePiston.cache_key :trait, guest_attr.trait.id
-
-    # sleep to prevent key clash
-    sleep(1)
 
     guest_attr.value = "who cares"
     guest_attr.save!
@@ -59,8 +51,6 @@ class NotifierTest < ActiveSupport::TestCase
     su_key      = LaMaquina::Piston::CachePiston.cache_key :admin, su_whatever.user.id
     gt_key      = LaMaquina::Piston::CachePiston.cache_key :guest, gregs_thing.user.id
 
-    sleep(1)
-
     su_whatever.value = "blah"
     gregs_thing.value = "blah blah"
 
@@ -74,8 +64,6 @@ class NotifierTest < ActiveSupport::TestCase
   def test_object_creation_notifies_listener
     greg  = guests(:greg)
     key   = LaMaquina::Piston::CachePiston.cache_key :guest, greg.id
-
-    sleep(1)
     
     greg.guest_traits.create!(:value => "some bullshit")
     
@@ -87,8 +75,6 @@ class NotifierTest < ActiveSupport::TestCase
     wheel_attr  = admin_traits(:wheels_something_else)
     
     key         = LaMaquina::Piston::CachePiston.cache_key :admin, wheel.id
-
-    sleep(1)
     
     wheel_attr.destroy
     
@@ -98,8 +84,6 @@ class NotifierTest < ActiveSupport::TestCase
   def test_notifications_can_use_through_associations
     modifier  = guest_trait_modifiers(:gregs_something_modifier)
     key       = LaMaquina::Piston::CachePiston.cache_key(:guest, modifier.guest_trait.guest.id)
-
-    sleep(1)
 
     modifier.modifier = "something something darkside"
     modifier.save!
@@ -111,8 +95,6 @@ class NotifierTest < ActiveSupport::TestCase
     modifier  = admin_trait_modifiers(:wheels_something_else_modifier)
     admin_key = LaMaquina::Piston::CachePiston.cache_key :admin, modifier.admin_trait.user.id
     trait_key = LaMaquina::Piston::CachePiston.cache_key :trait, modifier.admin_trait.thing.id
-
-    sleep(1)
 
     modifier.modifier = "something something darkside"
     modifier.save!

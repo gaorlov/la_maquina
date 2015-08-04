@@ -13,8 +13,6 @@ class SunspotPistonTest < ActiveSupport::TestCase
 
     @admin.update_attributes name: "OMGLOL"
 
-    sleep(1)
-
     search = Admin.search{ fulltext "OMGLOL" }.results
     assert_not_empty search
   end

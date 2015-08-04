@@ -3,7 +3,7 @@ module LaMaquina
     class Base
       def initialize( path = nil )
         if path
-          map = YAML.load_file(path).with_indifferent_access
+          self.map = YAML.load_file(path).with_indifferent_access
         end
       end
 
