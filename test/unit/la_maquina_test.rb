@@ -2,6 +2,10 @@ require 'test_helper'
 
 class LaMaquinaTest < ActiveSupport::TestCase
 
+  def setup
+    @admin = admins(:wheel)
+  end
+
   def test_object_name_formatting
     assert_equal "admin",       LaMaquina.format_object_name(admins(:su))
     assert_equal "admin_trait", LaMaquina.format_object_name(admin_traits(:wheels_something_else))
@@ -11,5 +15,13 @@ class LaMaquinaTest < ActiveSupport::TestCase
   def test_class_name_formatting
     assert_equal "admin",       LaMaquina.format_class_name(Admin)
     assert_equal "admin_trait", LaMaquina.format_class_name(AdminTrait)
+  end
+
+
+  def test_full_stack
+    @admin.name = "lol"
+    @admin.save!
+
+    assert_equal "admin/#{@admin.id}", $fire_message
   end
 end

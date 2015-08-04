@@ -4,7 +4,7 @@ class Guest < ActiveRecord::Base
 
   has_many :properties, :as => :user
 
-  include LaMaquina::Volante
+  include LaMaquina::Notifier
 
-  notifies :self
+  notifies_about :self
 end

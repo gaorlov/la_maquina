@@ -1,10 +1,11 @@
 require "la_maquina/version"
 
 module LaMaquina
-  autoload :Ciguenal,             'la_maquina/ciguenal'
+  autoload :DependencyMap,        'la_maquina/dependency_map'
+  autoload :Engine,               'la_maquina/engine'
   autoload :ErrorNotifier,        'la_maquina/error_notifier'
   autoload :Piston,               'la_maquina/piston'
-  autoload :Volante,              'la_maquina/volante'
+  autoload :Notifier,             'la_maquina/notifier'
 
   mattr_accessor :error_notifier
   error_notifier ||= LaMaquina::ErrorNotifier::Base

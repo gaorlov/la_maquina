@@ -2,8 +2,8 @@ class GuestTrait < ActiveRecord::Base
   belongs_to :guest
   belongs_to :trait
 
-  include LaMaquina::Volante
+  include LaMaquina::Notifier
 
-  notifies :guest
-  notifies :trait
+  notifies_about :guest
+  notifies_about :trait
 end

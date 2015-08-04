@@ -1,5 +1,5 @@
 class Standalone < ActiveRecord::Base
-  include LaMaquina::Volante
+  include LaMaquina::Notifier
 
-  notifies :self, :comm_object => ::ExplodingCommObject
+  notifies_about :self, using: ::ExplodingCommObject
 end

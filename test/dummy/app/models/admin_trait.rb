@@ -2,8 +2,8 @@ class AdminTrait < ActiveRecord::Base
   belongs_to :user, :class_name => "Admin"
   belongs_to :thing, :class_name => "Trait"
 
-  include LaMaquina::Volante
+  include LaMaquina::Notifier
 
-  notifies :user, :class => Admin
-  notifies :thing, :class_name => "Trait"
+  notifies_about :user, :class => Admin
+  notifies_about :thing, :class_name => "Trait"
 end

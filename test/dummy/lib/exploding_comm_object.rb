@@ -1,5 +1,5 @@
 class ExplodingCommObject
-  def self.notify! params
+  def self.notify params
     raise "oh noes!"
   end
 end

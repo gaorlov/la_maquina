@@ -1,5 +1,5 @@
 module LaMaquina
-  module Volante
+  module Notifier
     extend ActiveSupport::Concern
     include ActiveRecord::Callbacks
 
@@ -13,7 +13,7 @@ module LaMaquina
 
       
       class << self
-        def notifies(object, opts = {})
+        def notifies_about(object, opts = {})
           notified_objects << {:object => object, :options => opts}
         end
       end
@@ -32,18 +32,20 @@ module LaMaquina
         klass = notified_klass( object, options )
         id    = notified_id( object, options )
 
+        notifier_class = LaMaquina.format_object_name(self)
+
         begin
           if comm_object
-            comm_object.notify(:notified_class => klass, :notified_id => id, :notifier_class => LaMaquina.format_object_name(self))
+            comm_object.notify(:notified_class => klass, :notified_id => id, :notifier_class => notifier_class)
           else
-            LaMaquina::Ciguenal.notify!(klass, id)
+            LaMaquina::Engine.notify! klass, id, notifier_class
           end
         rescue => e
           LaMaquina.error_notifier.notify(  e,
-                                            :notified_class => klass,
-                                            :notified_id => id,
-                                            :notifier_class => LaMaquina.format_object_name(self),
-                                            :notifier_id => self.id)
+                                            notified_class: klass,
+                                            notified_id: id,
+                                            notifier_class: notifier_class,
+                                            notifier_id: self.id)
         end
       end
     end

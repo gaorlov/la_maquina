@@ -4,31 +4,34 @@ module LaMaquina
       class << self
         attr_accessor :redis
 
-        def fire!(klass = "", id = nil)
-
-          updated_at = SecureRandom.uuid()
-          redis_key_string = redis_key klass, id
-          # make a class var with a default
-
-          cache_key = "#{redis_key_string}/#{updated_at}"
-          redis.set redis_key_string, cache_key
-
-          cache_key
+        def fire!( notified_class, id, notifier_class = "" )
+          update_cache notified_class, id
         end
 
-        def cache_key(klass, id)
+        def cache_key(notified_class, id)
 
-          redis_key_string = redis_key klass, id
+          key = redis_key notified_class, id
 
-          key = redis.get redis_key_string
+          cache_key = redis.get key
           # key found
-          return key if key
+          return cache_key if cache_key
 
           # there's no key; we can't very well rerun nil for cache_key. Let's make a new entry
-          touch_cache klass, id
+          update_cache notified_class, id
         end
 
         protected
+
+        def update_cache( notified_class, id)
+          uuid = SecureRandom.uuid()
+          key = redis_key notified_class, id
+          # make a class var with a default
+
+          cache_key = "#{key}/#{uuid}"
+          redis.set key, cache_key
+
+          cache_key
+        end
 
         def redis_key(klass, id)
           "#{klass}/#{id}"

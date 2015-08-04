@@ -1,8 +1,7 @@
 class Property < ActiveRecord::Base
   belongs_to :user, :polymorphic => true
 
-  include LaMaquina::Volante
+  include LaMaquina::Notifier
 
-
-  notifies :user, :polymorphic => true
+  notifies_about :user, :polymorphic => true
 end

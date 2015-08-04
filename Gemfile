@@ -18,5 +18,10 @@ gem "rails", rails
 gem "redis"
 gem "redis-namespace"
 
+# solr
+gem 'sunspot_rails'
+gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
+gem 'progress_bar'
+
 gem 'test_after_commit', :group => :test
 gem 'simplecov', :group => :test

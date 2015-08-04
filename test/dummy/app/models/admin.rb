@@ -4,8 +4,12 @@ class Admin < ActiveRecord::Base
 
   has_many :properties, :as => :user
 
-  include LaMaquina::Volante
-  notifies :self
+  searchable do 
+    text :name
+  end
 
-  notifies :self, :using => ::DummyCommObject
+  include LaMaquina::Notifier
+  notifies_about :self
+
+  notifies_about :self, using: ::DummyCommObject
 end

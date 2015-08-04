@@ -1,0 +1,5 @@
+test:
+  solr:
+    hostname: localhost
+    port: 8980
+    log_level: OFF

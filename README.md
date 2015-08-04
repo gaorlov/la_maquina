@@ -1,6 +1,6 @@
 # La Maquina
 
-TODO: Write a gem description
+Model graph traversal 
 
 ## Installation
 
@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ### Pistons
 
-Once the `Ciguenal` is called it fires the `Piston`s, the behavior of which is entirely up to you. 
+Once the `Engine` is called it fires the `Piston`s, the behavior of which is entirely up to you. 
 
 So, let's say, we have a couple objects that look like:
 
@@ -41,8 +41,8 @@ end
 class Machete < ActiveRecord::Base
   belongs_to :danny_trejo
 
-  include LaMaquina::Volante
-  notifies :danny_trejo
+  include LaMaquina::Notifier
+  notifies_about :danny_trejo
 end
 ```
 and we want to let `DannyTrejo` know when his `Machete` has been updated so that we can reindex him.
@@ -52,8 +52,8 @@ and we want to let `DannyTrejo` know when his `Machete` has been updated so that
 ```ruby
 class SunspotPiston < LaMaquina::Piston::Base
   class << self
-    def fire!(klass = "", id = nil)
-      indexed_class.find(id).index!
+    def fire!( notified_class, id, notifier_class = "" )
+      indexed_class(notified_class).find(id).index!
     end
 
     private
@@ -76,7 +76,7 @@ For example, if you're using the CachePiston and need to set up Redis, here's ho
 
 ```ruby
 LaMaquina::Piston::CachePiston.redis = Redis::Namespace.new(:cache_piston, redis: Redis.new)
-LaMaquina::Ciguenal.install LaMaquina::Piston::CachePiston, TestPiston
+LaMaquina::Engine.install LaMaquina::Piston::CachePiston, TestPiston
 LaMaquina.error_notifier = LaMaquina::ErrorNotifier::HoneybadgerNotifier
 ```
 #### ErrorNotifier
