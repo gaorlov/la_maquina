@@ -2,7 +2,7 @@ module LaMaquina
   module DependencyMap
     class ConstantMap < LaMaquina::DependencyMap::Base
       
-      def mapping_for(notified_class, id)
+      def mapping_for(notified_class)
         notified_class.camelize.constantize
       rescue => e
         LaMaquina.error_notifier.notify(  e,
