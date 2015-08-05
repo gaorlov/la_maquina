@@ -13,8 +13,8 @@ module LaMaquina
 
       
       class << self
-        def notifies_about(object, opts = {})
-          notified_objects << {:object => object, :options => opts}
+        def notifies_about(target, opts = {})
+          notified_objects << {:target => target, :options => opts}
         end
       end
 
@@ -24,21 +24,23 @@ module LaMaquina
     def notify!
       self.class.notified_objects.each do |notified|
 
-        object  = notified[:object]
+        target  = notified[:target]
         options = notified[:options]
 
         comm_object = options[:using]
 
-        klass = notified_klass( object, options )
-        id    = notified_id( object, options )
+        klass = notified_class( target, options )
+        ids   = notified_id( target, options )
 
         notifier_class = LaMaquina.format_object_name(self)
 
         begin
-          if comm_object
-            comm_object.notify(:notified_class => klass, :notified_id => id, :notifier_class => notifier_class)
-          else
-            LaMaquina::Engine.notify! klass, id, notifier_class
+          ids.each do |id|
+            if comm_object
+              comm_object.notify(:notified_class => klass, :notified_id => id, :notifier_class => notifier_class)
+            else
+              LaMaquina::Engine.notify! klass, id, notifier_class
+            end
           end
         rescue => e
           LaMaquina.error_notifier.notify(  e,
@@ -52,13 +54,17 @@ module LaMaquina
 
     private
 
-    def notified_klass(object, options)
-      if object == :self
+    def notified_class(target, options)
+      if target == :self
         return LaMaquina.format_object_name(self)
       end
 
       if options[:polymorphic]
-        return LaMaquina.format_class_name(self.send("#{object}_type"))
+        if self.respond_to? "#{target}_type"
+          return LaMaquina.format_class_name(self.send("#{target}_type"))
+        else
+          return LaMaquina.format_class_name(self.send(target).class)
+        end
       end
       
       if options[:class_name]
@@ -69,19 +75,34 @@ module LaMaquina
         return LaMaquina.format_class_name(options[:class])
       end
       
-      return object
+      return target
     end
 
-    def notified_id(object, options)
-      if object == :self
-        return self.id 
+    def notified_id(target, options)
+      if target == :self
+        return [self.id]
       end
 
       if options[:through]
-        return self.send(options[:through]).send("#{object}_id") 
+        ids = []
+        join_objects =  Array(self.send(options[:through]))
+        
+        join_objects.each do |obj|
+          if obj.respond_to? "#{target}_id"
+            ids << obj.send("#{target}_id")
+          else
+            ids << Array(obj.send(target)).map(&:id)
+          end
+        end
+
+        return ids
       end
 
-      self.send("#{object}_id")
+      if self.respond_to? "#{target}_id"
+        Array self.send("#{target}_id")
+      else
+        ids = Arrray(self.send(target)).map(&:id)
+      end
     end
   end
 end
