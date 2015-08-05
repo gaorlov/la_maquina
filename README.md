@@ -76,7 +76,7 @@ It can either notify LaMaquina about the object itself with `notifies_about :sel
       notified_id     = params[:notified_id]
       notifier_class  = params[:notifier_class]
 
-      LaMaquina::Engine.notify notifier_class, id, notified_class
+      LaMaquina::Engine.notify! notifier_class, id, notified_class
 
       render json: {success: true}
     end
@@ -209,7 +209,7 @@ end
 ```
 If you *don't* care about your exceptions and want to ignore them, there's a notifier you can use, `SilentNotifier`, making that last line in your `config/initializers/la_maquina.rb` be
 ```ruby
-LaMaquina::Cinegual.error_notifier = LaMaquina::ErrorNotifier::SilentNotifier
+LaMaquina.error_notifier = LaMaquina::ErrorNotifier::SilentNotifier
 ```
 
 ## Setup
