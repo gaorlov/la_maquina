@@ -85,6 +85,8 @@ Note: `class` and `class_name` options aren't stricly checked; they're formatted
 
 ### Pistons
 
+A piston is a plugin that can be fired on update. 
+
 Once a model with a `notifies_about :whatever` gets updated and a commit happens, it will fire off a call to wherever LaMaquina is installed (either locally, or on another server if you're notifying through `JsonApiClient` or similar). Once LaMaquina::Engine receives the call it will fire all of its pistons in no particualr order.
 
 So using the example from above:
