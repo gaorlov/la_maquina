@@ -23,4 +23,10 @@ class YamlMapTest < ActiveSupport::TestCase
     assert 'admin', @map.mapping_for(:admin)
     assert :admin, @map.mapping_for(:admin)
   end
+
+  def test_can_go_to_any_depth
+    map = LaMaquina::DependencyMap::YamlMap.new( Rails.root + 'config/la_maquina/dependency_maps/deep_map.yml' )
+    assert_equal "trait", map.mapping_for( "admin", "trait" )
+    assert_equal "b", map.mapping_for( "guest", "trait", 1 )
+  end
 end
