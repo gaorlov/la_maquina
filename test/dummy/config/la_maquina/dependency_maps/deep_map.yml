@@ -1,0 +1,7 @@
+admin:
+  trait: trait
+
+guest:
+  trait:
+    - a
+    - b

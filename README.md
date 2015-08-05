@@ -196,11 +196,11 @@ map.mapping_for "danny_trejo", "machete", 1 # => "favorite"
 ```
 
 ### ErrorNotifier
-LaMaquina by default comes with an `ErrorNotifier::Base` that will explode in a very unhelpful manner. To override it, you need to change it in the config above and roll a new `ErrorNotifier` that responds to `notify(error, details)`. For example, if you're using Honeybadger, you can use the included `LaMaquina::ErrorNotifiers::HoneybadgerNotifier, which looks like:
+LaMaquina by default comes with an `ErrorNotifier::Base` that will explode in a very unhelpful manner. To override it, you need to change it in the config above and roll a new `ErrorNotifier` that responds to `notify(error, details)`. For example, if you're using Honeybadger, you can use the included `LaMaquina::ErrorNotifiers::HoneybadgerNotifier`, which looks like:
 ```ruby
 class HoneybadgerNotifier < LaMaquina::ErrorNotifier::Base
   self.notify(error = nil, details = {})
-    Honeybadger.notify( :error_class => "CacheMachineError: #{error.class.name}",
+    Honeybadger.notify( :error_class => "LaMaquinaError: #{error.class.name}",
                         :error_message => error.message,
                         :parameters => details
                       )
