@@ -1,7 +1,8 @@
 # La Maquina
 
 Non-database-based arbitrary updates of `belongs_to` associated ActiveRecord models. 
-So if you have 2 models
+
+Let's say you have 2 models
 ```ruby
 class DannyTrejo < ActiveRecord::Base
   has_many :machetes
