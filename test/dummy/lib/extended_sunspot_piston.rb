@@ -1,7 +1,7 @@
 class ExtendedSunspotPiston < LaMaquina::Piston::SunspotPiston
   class << self
     def fire!( notified_class, id, notifier_class = "" )
-      if yaml_map.mapping_for notified_class
+      if yaml_map.find notified_class
         super
         $last_reindexed = notified_class
       end

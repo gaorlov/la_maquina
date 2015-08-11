@@ -142,7 +142,7 @@ class CompositeCachePison < LaMaquina::Piston::Base
     def fire!( notified_class, id, notifier_class )
       key = "#{notified_class}/#{notifier_class}:#{id}"
 
-      klass = map.mapping_for notified_class
+      klass = map.find notified_class
       object = klass.find(id)
 
       # because notifier_class is already snaked we can just send it as an association
@@ -167,7 +167,7 @@ class Map < LaMaquina::DependencyMap::Base
   # defined in Base
   # initialize( yaml_path = nil)
 
-  def mapping_for(*args)
+  def find(*args)
     # your code here
   end
 
@@ -180,7 +180,7 @@ LaMaquina comes with 2 default maps: `ConstantMap` and `YamlMap`.
 `LaMaquina::DependencyMap::ConstantMap` takes a string and tries to constantize it. It's not strictly speaking a map, but it works as you would expect: 
 ```ruby
 map = LaMaquina::DependencyMap::ConstantMap.new
-map.mapping_for "danny_trejo" # => DannyTrejo(id: integer, ...)
+map.find "danny_trejo" # => DannyTrejo(id: integer, ...)
 ```
 `LaMaquina::DependencyMap::YamlMap` get initialized with a yaml path, parses the yaml and spits out a dependency at any depth, meaning:
 ```yml
@@ -192,7 +192,7 @@ danny_trejo:
 ```
 ```ruby
 map = LaMaquina::DependencyMap::YamlMap.new "#{Rail.root}/config/map.yml"
-map.mapping_for "danny_trejo", "machete", 1 # => "favorite"
+map.find "danny_trejo", "machete", 1 # => "favorite"
 ```
 
 ### ErrorNotifier
