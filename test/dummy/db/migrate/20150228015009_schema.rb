@@ -46,10 +46,16 @@ class Schema < ActiveRecord::Migration
     create_table :admin_thing do |t|
       t.belongs_to :admin
       t.string :value
+      t.belongs_to :thing
     end
 
     create_table :guest_thing do |t|
       t.belongs_to :guest
+      t.string :value
+      t.belongs_to :thing
+    end
+
+    create_table :thing do |t|
       t.string :value
     end
   end

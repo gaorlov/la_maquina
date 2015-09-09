@@ -1,9 +1,10 @@
 class Admin < ActiveRecord::Base
   has_many :admin_traits
-  has_many :traits, :through => :admin_traits
-  has_one  :thing
+  has_many :traits, through: :admin_traits
+  has_one  :admin_thing
+  has_one  :thing, through: :admin_thing
 
-  has_many :properties, :as => :user
+  has_many :properties, as: :user
 
   searchable do 
     text :name
