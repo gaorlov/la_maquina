@@ -42,6 +42,16 @@ class Schema < ActiveRecord::Migration
     create_table :standalones do |t|
       t.string :value
     end
+
+    create_table :admin_thing do |t|
+      t.belongs_to :admin
+      t.string :value
+    end
+
+    create_table :guest_thing do |t|
+      t.belongs_to :guest
+      t.string :value
+    end
   end
 end
   

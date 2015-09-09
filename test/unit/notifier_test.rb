@@ -120,4 +120,36 @@ class NotifierTest < ActiveSupport::TestCase
     assert_equal "oh noes!", $error.to_s
     assert_equal "standalone", $deets[:notified_class]
   end
+
+  def test_notifier_can_update_has_one
+
+  end
+
+  def test_notifier_can_update_has_one_through
+
+  end
+
+  def test_notifier_can_update_has_many_with_comm_object
+
+  end
+
+  def test_notifier_can_update_has_one_through_with_comm_object
+
+  end
+
+  def test_notifier_can_update_has_many
+
+  end
+
+  def test_notifier_can_update_has_many_through
+
+  end
+
+  def test_notifier_can_update_has_many_with_comm_object
+
+  end
+
+  def test_notifier_can_update_has_many_through_with_comm_object
+
+  end
 end

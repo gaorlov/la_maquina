@@ -245,6 +245,18 @@ Or install it yourself as:
     $ gem install la_maquina
 
 
+## Testing
+
+As of today, the tests rely on solr (I need to get rid of that, I know), so to test you need to
+    $ cd la_maquina/test/dummy
+    $ bundle install
+    $ rake db:migrate RAILS_ENV=test
+    $ bundle exec rake sunspot:solr:start RAILS_ENV=test
+    $ bundle exec rake sunspot:reindex RAILS_ENV=test
+
+    $ cd ../../
+    $ rake
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/la_maquina/fork )

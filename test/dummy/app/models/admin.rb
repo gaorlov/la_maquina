@@ -1,6 +1,7 @@
 class Admin < ActiveRecord::Base
   has_many :admin_traits
   has_many :traits, :through => :admin_traits
+  has_one  :thing
 
   has_many :properties, :as => :user
 
@@ -12,4 +13,7 @@ class Admin < ActiveRecord::Base
   notifies_about :self
 
   notifies_about :self, using: ::DummyCommObject
+
+  notifies_about :admin_traits
+  notifies_about :traits
 end
