@@ -7,8 +7,8 @@ module LaMaquina
         end
       end
 
-      def mapping_for(*args)
-        raise "A dependency map has to implement 'mapping_for'"
+      def find(*args)
+        raise "A dependency map has to implement 'find'"
       end
 
       protected

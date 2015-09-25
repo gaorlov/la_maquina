@@ -76,7 +76,7 @@ It can either notify LaMaquina about the object itself with `notifies_about :sel
       notified_id     = params[:notified_id]
       notifier_class  = params[:notifier_class]
 
-      LaMaquina::Engine.notify notifier_class, id, notified_class
+      LaMaquina::Engine.notify! notifier_class, id, notified_class
 
       render json: {success: true}
     end
@@ -142,7 +142,7 @@ class CompositeCachePison < LaMaquina::Piston::Base
     def fire!( notified_class, id, notifier_class )
       key = "#{notified_class}/#{notifier_class}:#{id}"
 
-      klass = map.mapping_for notified_class
+      klass = map.find notified_class
       object = klass.find(id)
 
       # because notifier_class is already snaked we can just send it as an association
@@ -167,7 +167,7 @@ class Map < LaMaquina::DependencyMap::Base
   # defined in Base
   # initialize( yaml_path = nil)
 
-  def mapping_for(*args)
+  def find(*args)
     # your code here
   end
 
@@ -180,7 +180,7 @@ LaMaquina comes with 2 default maps: `ConstantMap` and `YamlMap`.
 `LaMaquina::DependencyMap::ConstantMap` takes a string and tries to constantize it. It's not strictly speaking a map, but it works as you would expect: 
 ```ruby
 map = LaMaquina::DependencyMap::ConstantMap.new
-map.mapping_for "danny_trejo" # => DannyTrejo(id: integer, ...)
+map.find "danny_trejo" # => DannyTrejo(id: integer, ...)
 ```
 `LaMaquina::DependencyMap::YamlMap` get initialized with a yaml path, parses the yaml and spits out a dependency at any depth, meaning:
 ```yml
@@ -192,24 +192,22 @@ danny_trejo:
 ```
 ```ruby
 map = LaMaquina::DependencyMap::YamlMap.new "#{Rail.root}/config/map.yml"
-map.mapping_for "danny_trejo", "machete", 1 # => "favorite"
+map.find "danny_trejo", "machete", 1 # => "favorite"
 ```
 
 ### ErrorNotifier
-LaMaquina by default comes with an `ErrorNotifier::Base` that will explode in a very unhelpful manner. To override it, you need to change it in the config above and roll a new `ErrorNotifier` that responds to `notify(error, details)`. For example, if you're using Honeybadger, you can use the included `LaMaquina::ErrorNotifiers::HoneybadgerNotifier`, which looks like:
+LaMaquina by default comes with an `ErrorNotifier::Base` that will explode in a very unhelpful manner. To override it, you need to change it in the config above and roll a new `ErrorNotifier` that responds to `notify(error, details)`. For example, a really handy debugging notifier you can build is a PutsNotifier, that just puts the error details, and looks like this:
 ```ruby
-class HoneybadgerNotifier < LaMaquina::ErrorNotifier::Base
-  self.notify(error = nil, details = {})
-    Honeybadger.notify( :error_class => "LaMaquinaError: #{error.class.name}",
-                        :error_message => error.message,
-                        :parameters => details
-                      )
+class PutsNotifier < LaMaquina::ErrorNotifier::Base
+
+  def self.notify(error, details)
+    puts error.inspect, details.inspect
   end
 end
 ```
 If you *don't* care about your exceptions and want to ignore them, there's a notifier you can use, `SilentNotifier`, making that last line in your `config/initializers/la_maquina.rb` be
 ```ruby
-LaMaquina::Cinegual.error_notifier = LaMaquina::ErrorNotifier::SilentNotifier
+LaMaquina.error_notifier = LaMaquina::ErrorNotifier::SilentNotifier
 ```
 
 ## Setup

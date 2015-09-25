@@ -4,7 +4,7 @@ module LaMaquina
 
       class << self
         def fire!( notified_class, id, notifier_class = "" )  
-          target_class = map.mapping_for notified_class, id
+          target_class = map.find notified_class
           target       = target_class.find(id)
           target.solr_index!
         rescue => e

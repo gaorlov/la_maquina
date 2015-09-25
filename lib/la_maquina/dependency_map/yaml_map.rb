@@ -1,7 +1,7 @@
 module LaMaquina
   module DependencyMap
     class YamlMap < LaMaquina::DependencyMap::Base
-      def mapping_for(*args)
+      def find(*args)
         submap = map
         args.each do |key|
           submap = submap[key]
