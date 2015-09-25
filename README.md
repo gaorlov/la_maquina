@@ -1,6 +1,6 @@
 # La Maquina
 
-Non-database-based arbitrary updates of `belongs_to` associated ActiveRecord models. 
+Non-database-based arbitrary updates of associated ActiveRecord models. 
 
 Let's say you have 2 models
 ```ruby
@@ -57,9 +57,9 @@ to use it, in your `ActiveRecord::Base` model
 ```ruby
 include LaMaquina::Notifier
 ```
-It can either notify LaMaquina about the object itself with `notifies_about :self`, or about a `belongs_to` association with the following options:
+It can either notify LaMaquina about the object itself with `notifies_about :self`, or about another association with the following options:
 
-* `:through`: same as rails. Note: expects the through object belongs_to the target object
+* `:through`: same as rails.
 * `:polymorphic`: same as rails. Note: expects rails default target `_type` and targe `_id` fields to be present
 * `:class_name`: takes a modulized camelcased string name of the target class
 * `:class`: takes a class constant of the target class type
