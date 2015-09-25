@@ -20,7 +20,7 @@ class Schema < ActiveRecord::Migration
 
     create_table :admin_traits do |t|
       t.belongs_to :user
-      t.belongs_to :thing
+      t.belongs_to :blah
       t.string :value
     end
 
@@ -43,19 +43,19 @@ class Schema < ActiveRecord::Migration
       t.string :value
     end
 
-    create_table :admin_thing do |t|
+    create_table :admin_things do |t|
       t.belongs_to :admin
       t.string :value
       t.belongs_to :thing
     end
 
-    create_table :guest_thing do |t|
+    create_table :guest_things do |t|
       t.belongs_to :guest
       t.string :value
       t.belongs_to :thing
     end
 
-    create_table :thing do |t|
+    create_table :things do |t|
       t.string :value
     end
   end

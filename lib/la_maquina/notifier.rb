@@ -75,7 +75,7 @@ module LaMaquina
         return LaMaquina.format_class_name(options[:class])
       end
       
-      return target
+      return target.to_s.singularize
     end
 
     def notified_id(target, options)
@@ -101,7 +101,7 @@ module LaMaquina
       if self.respond_to? "#{target}_id"
         Array self.send("#{target}_id")
       else
-        ids = Arrray(self.send(target)).map(&:id)
+        Array(self.send(target)).map(&:id)
       end
     end
   end

@@ -1,4 +1,10 @@
+wheels_something:
+  user: wheel
+  blah: something
+  value: completely different
+
 wheels_something_else:
   user: wheel
-  thing: something_else
+  blah: something_else
   value: tha larch
+

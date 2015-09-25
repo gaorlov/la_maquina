@@ -2,3 +2,8 @@ gregs_something:
   guest: greg
   trait: something
   value: many moons
+
+gregs_something_else:
+  guest: greg
+  trait: something_else
+  value: whatever

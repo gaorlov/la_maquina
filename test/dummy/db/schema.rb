@@ -11,5 +11,82 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20150228015009) do
+
+  create_table "admin_thing", force: :cascade do |t|
+    t.integer "admin_id"
+    t.string  "value"
+    t.integer "thing_id"
+  end
+
+  create_table "admin_things", force: :cascade do |t|
+    t.integer "admin_id"
+    t.string  "value"
+    t.integer "thing_id"
+  end
+
+  create_table "admin_trait_modifiers", force: :cascade do |t|
+    t.integer "admin_trait_id"
+    t.string  "modifier"
+  end
+
+  create_table "admin_traits", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "blah_id"
+    t.string  "value"
+  end
+
+  create_table "admins", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "guest_thing", force: :cascade do |t|
+    t.integer "guest_id"
+    t.string  "value"
+    t.integer "thing_id"
+  end
+
+  create_table "guest_things", force: :cascade do |t|
+    t.integer "guest_id"
+    t.string  "value"
+    t.integer "thing_id"
+  end
+
+  create_table "guest_trait_modifiers", force: :cascade do |t|
+    t.integer "guest_trait_id"
+    t.string  "modifier"
+  end
+
+  create_table "guest_traits", force: :cascade do |t|
+    t.integer "guest_id"
+    t.integer "trait_id"
+    t.string  "value"
+  end
+
+  create_table "guests", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "user_type"
+    t.string  "value"
+  end
+
+  create_table "standalones", force: :cascade do |t|
+    t.string "value"
+  end
+
+  create_table "thing", force: :cascade do |t|
+    t.string "value"
+  end
+
+  create_table "things", force: :cascade do |t|
+    t.string "value"
+  end
+
+  create_table "traits", force: :cascade do |t|
+    t.string "name"
+  end
+
 end

@@ -11,13 +11,13 @@ class NotifierTest < ActiveSupport::TestCase
   def test_notifier_suports_explicit_class_and_class_name
     admin_attr = admin_traits(:wheels_something_else)
     admin_key  = LaMaquina::Piston::CachePiston.cache_key :admin, admin_attr.user.id
-    trait_key  = LaMaquina::Piston::CachePiston.cache_key :trait, admin_attr.thing.id
+    trait_key  = LaMaquina::Piston::CachePiston.cache_key :trait, admin_attr.blah.id
 
     admin_attr.value = "lol"
     admin_attr.save!
 
     assert_not_equal admin_key, LaMaquina::Piston::CachePiston.cache_key(:admin, admin_attr.user.id)
-    assert_not_equal trait_key, LaMaquina::Piston::CachePiston.cache_key(:trait, admin_attr.thing.id)
+    assert_not_equal trait_key, LaMaquina::Piston::CachePiston.cache_key(:trait, admin_attr.blah.id)
   end
 
   def test_notifier_can_update_self
@@ -94,13 +94,13 @@ class NotifierTest < ActiveSupport::TestCase
   def test_notifier_can_update_through_with_explicit_target_class
     modifier  = admin_trait_modifiers(:wheels_something_else_modifier)
     admin_key = LaMaquina::Piston::CachePiston.cache_key :admin, modifier.admin_trait.user.id
-    trait_key = LaMaquina::Piston::CachePiston.cache_key :trait, modifier.admin_trait.thing.id
+    trait_key = LaMaquina::Piston::CachePiston.cache_key :trait, modifier.admin_trait.blah.id
 
     modifier.modifier = "something something darkside"
     modifier.save!
 
     assert_not_equal admin_key, LaMaquina::Piston::CachePiston.cache_key(:admin, modifier.admin_trait.user.id)
-    assert_not_equal trait_key, LaMaquina::Piston::CachePiston.cache_key(:trait, modifier.admin_trait.thing.id)
+    assert_not_equal trait_key, LaMaquina::Piston::CachePiston.cache_key(:trait, modifier.admin_trait.blah.id)
   end
 
   def test_notify_through_intermediate_object
@@ -108,6 +108,8 @@ class NotifierTest < ActiveSupport::TestCase
     admin.update_attribute(:name, "lol")
 
     assert $dummy_params, "comm_object wasn't called"
+    
+    # NOTE: this value is the last notifies_about with a `using: DummyCommObject` in the file because DummyCommObject is indeed a dummy. 
     assert_equal "admin", $dummy_params[:notified_class]
   end
 
@@ -122,34 +124,110 @@ class NotifierTest < ActiveSupport::TestCase
   end
 
   def test_notifier_can_update_has_one
-
+    greg  = guests(:greg)
+    
+    key   = LaMaquina::Piston::CachePiston.cache_key :guest_thing, greg.guest_thing.id
+    
+    greg.touch
+    
+    assert_not_equal key, LaMaquina::Piston::CachePiston.cache_key(:guest_thing, greg.guest_thing.id)
   end
 
   def test_notifier_can_update_has_one_through
-
+    greg  = guests(:greg)
+    
+    key   = LaMaquina::Piston::CachePiston.cache_key :thing, greg.thing.id
+    
+    greg.touch
+    
+    assert_not_equal key, LaMaquina::Piston::CachePiston.cache_key(:thing, greg.thing.id)
   end
 
-  def test_notifier_can_update_has_many_with_comm_object
-
+  def test_notifier_can_update_has_one_with_comm_object
+    su  = admins(:su)
+    
+    key = LaMaquina::Piston::CachePiston.cache_key :admin_thing, su.admin_thing.id
+    
+    su.touch
+    
+    assert_not_equal key, LaMaquina::Piston::CachePiston.cache_key(:admin_thing, su.admin_thing.id)
   end
 
   def test_notifier_can_update_has_one_through_with_comm_object
-
+    su  = admins(:su)
+    
+    key = LaMaquina::Piston::CachePiston.cache_key :thing, su.thing.id
+    
+    su.touch
+    
+    assert_not_equal key, LaMaquina::Piston::CachePiston.cache_key(:thing, su.thing.id)
   end
 
   def test_notifier_can_update_has_many
+    greg        = guests(:greg)
+    
+    trait_keys  = greg.guest_traits.map{ |guest_trait| 
+      { 
+        gt: guest_trait, 
+        key: LaMaquina::Piston::CachePiston.cache_key( :guest_trait, guest_trait.id ) 
+      }
+    }
+    
+    greg.touch
 
+    trait_keys.each do |pair|
+      assert_not_equal pair[:key], LaMaquina::Piston::CachePiston.cache_key(:guest_trait, pair[:gt].id)
+    end
   end
 
   def test_notifier_can_update_has_many_through
+    greg        = guests(:greg)
+    
+    trait_keys  = greg.traits.map{ |trait| 
+      { 
+        t: trait, 
+        key: LaMaquina::Piston::CachePiston.cache_key( :trait, trait.id ) 
+      }
+    }
+    
+    greg.touch
 
+    trait_keys.each do |pair|
+      assert_not_equal pair[:key], LaMaquina::Piston::CachePiston.cache_key(:thing, pair[:t].id)
+    end
   end
 
   def test_notifier_can_update_has_many_with_comm_object
+    su          = admins(:su)
+    
+    trait_keys  = su.admin_traits.map{ |admin_trait| 
+      { 
+        gt: admin_trait, 
+        key: LaMaquina::Piston::CachePiston.cache_key( :admin_trait, admin_trait.id ) 
+      }
+    }
+    
+    su.touch
 
+    trait_keys.each do |pair|
+      assert_not_equal pair[:key], LaMaquina::Piston::CachePiston.cache_key(:admin_trait, pair[:gt].id)
+    end
   end
 
   def test_notifier_can_update_has_many_through_with_comm_object
+    su          = admins(:su)
+    
+    trait_keys  = su.traits.map{ |trait| 
+      { 
+        t: trait, 
+        key: LaMaquina::Piston::CachePiston.cache_key( :trait, trait.id ) 
+      }
+    }
+    
+    su.touch
 
+    trait_keys.each do |pair|
+      assert_not_equal pair[:key], LaMaquina::Piston::CachePiston.cache_key(:thing, pair[:t].id)
+    end
   end
 end

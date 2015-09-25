@@ -16,12 +16,4 @@ class LaMaquinaTest < ActiveSupport::TestCase
     assert_equal "admin",       LaMaquina.format_class_name(Admin)
     assert_equal "admin_trait", LaMaquina.format_class_name(AdminTrait)
   end
-
-
-  def test_full_stack
-    @admin.name = "lol"
-    @admin.save!
-
-    assert_equal "admin/#{@admin.id}", $fire_message
-  end
 end
