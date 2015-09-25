@@ -36,10 +36,18 @@ end
 class Machete < ActiveRecord::Base
   belongs_to :danny_trejo
 
+  # all you need to add to get danny_trejo to reindex on machete update
   include LaMaquina::Notifier
   notifies_about :danny_trejo
 end
 ```
+
+With the config of 
+```ruby
+LaMaquina::Engine.install LaMaquina::Piston::SunspotPison
+``` 
+
+When a `machete` updates, the piston will fire, re-indexing its `danny_trejo`.
 
 ## Usage
 
