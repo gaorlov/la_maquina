@@ -7,8 +7,6 @@ module LaMaquina
           submap = submap[key]
         end
         submap
-      rescue => e
-        LaMaquina.error_notifier.notify( e )
       end
     end
   end

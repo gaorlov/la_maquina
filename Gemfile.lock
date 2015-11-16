@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    la_maquina (0.2.0)
+    la_maquina (1.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -146,3 +146,6 @@ DEPENDENCIES
   sunspot_rails
   sunspot_solr
   test_after_commit
+
+BUNDLED WITH
+   1.10.6

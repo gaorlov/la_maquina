@@ -12,11 +12,11 @@ class YamlMapTest < ActiveSupport::TestCase
     assert 'admin', @map.find(:admin)
   end
 
-  def test_catches_mapless_lookup
-    map = LaMaquina::DependencyMap::YamlMap.new
-    map.find :admin
-    
-    assert_equal NoMethodError, $error.class
+  def test_throws_mapless_lookup
+    assert_raise NoMethodError do 
+      map = LaMaquina::DependencyMap::YamlMap.new
+      map.find :admin
+    end
   end
 
   def test_is_with_indifferent_access

@@ -11,10 +11,10 @@ class ConstantMapTest < ActiveSupport::TestCase
     assert Admin, @map.find(:admin)
   end
 
-  def test_catches_mapless_lookup
-    @map.find :lol
-    
-    assert_equal NoMethodError, $error.class
+  def test_throws_on_mapless_lookup
+    assert_raise NameError do
+      @map.find :lol
+    end
   end
 
   def test_is_with_indifferent_access
