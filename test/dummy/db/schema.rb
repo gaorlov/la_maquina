@@ -13,12 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20150228015009) do
 
-  create_table "admin_thing", force: :cascade do |t|
-    t.integer "admin_id"
-    t.string  "value"
-    t.integer "thing_id"
-  end
-
   create_table "admin_things", force: :cascade do |t|
     t.integer "admin_id"
     t.string  "value"
@@ -38,12 +32,6 @@ ActiveRecord::Schema.define(version: 20150228015009) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name"
-  end
-
-  create_table "guest_thing", force: :cascade do |t|
-    t.integer "guest_id"
-    t.string  "value"
-    t.integer "thing_id"
   end
 
   create_table "guest_things", force: :cascade do |t|
@@ -74,10 +62,6 @@ ActiveRecord::Schema.define(version: 20150228015009) do
   end
 
   create_table "standalones", force: :cascade do |t|
-    t.string "value"
-  end
-
-  create_table "thing", force: :cascade do |t|
     t.string "value"
   end
 

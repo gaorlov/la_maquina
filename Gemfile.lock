@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    la_maquina (1.0.1)
+    la_maquina (1.1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -148,4 +148,4 @@ DEPENDENCIES
   test_after_commit
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

@@ -6,7 +6,7 @@ module LaMaquina
         args.each do |key|
           submap = submap[key]
           if submap.blank?
-            raise LaMaquina::Errors::InvalidMappingError.new("#{args} not found in dependency map")
+            raise LaMaquina::Errors::InvalidMappingError.new("#{key} not found in #{args} in dependency map")
           end
         end
         submap
