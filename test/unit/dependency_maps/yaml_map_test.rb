@@ -13,9 +13,15 @@ class YamlMapTest < ActiveSupport::TestCase
   end
 
   def test_throws_mapless_lookup
-    assert_raise NoMethodError do 
+    assert_raise NoMethodError do
       map = LaMaquina::DependencyMap::YamlMap.new
       map.find :admin
+    end
+  end
+
+  def test_handles_invalid_notifier
+    assert_raise LaMaquina::Errors::InvalidMappingError do
+      @map.find 'totally fake thing', 'I raise an exception!'
     end
   end
 

@@ -6,6 +6,7 @@ module LaMaquina
   autoload :ErrorNotifier,        'la_maquina/error_notifier'
   autoload :Piston,               'la_maquina/piston'
   autoload :Notifier,             'la_maquina/notifier'
+  autoload :Errors,               'la_maquina/errors'
 
   mattr_accessor :error_notifier
   error_notifier ||= LaMaquina::ErrorNotifier::Base
