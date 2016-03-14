@@ -20,7 +20,9 @@ class YamlMapTest < ActiveSupport::TestCase
   end
 
   def test_handles_invalid_notifier
-    @map.find 'totally fake thing', 'no exceptions here!'
+    assert_raise LaMaquina::Errors::InvalidMappingError do
+      @map.find 'totally fake thing', 'I raise an exception!'
+    end
   end
 
   def test_is_with_indifferent_access
