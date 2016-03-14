@@ -5,6 +5,7 @@ module LaMaquina
         submap = map
         args.each do |key|
           submap = submap[key]
+          break if submap.blank?
         end
         submap
       end
